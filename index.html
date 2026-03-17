@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Tài Chính & Hồ Sơ Thanh Toán 2026</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --blue: #5b8fe8;
+            --blue-lt: #dde9fc;
+            --blue-bg: #eff6ff;
+            --green: #4baa6e;
+            --green-lt: #c8eeda;
+            --green-bg: #f0fdf4;
+            --yellow: #e0a040;
+            --yellow-lt: #faeac8;
+            --yellow-bg: #fffbeb;
+            --red: #e06060;
+            --red-lt: #fadadb;
+            --red-bg: #fff5f5;
+            --purple: #9b74d8;
+            --purple-lt: #e8dcf8;
+            --purple-bg: #f8f4ff;
+            --orange: #e8854a;
+            --bg: #f4f6fc;
+            --card: #ffffff;
+            --text: #2e3a5a;
+            --muted: #8898b8;
+            --border: #e8edf4;
+            --radius: 16px;
+            --shadow: 0 2px 14px rgba(60, 80, 160, .07);
+        }
+
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 28px 22px 40px;
+        }
+
+        /* ─── HEADER ─── */
+        .header {
+            text-align: center;
+            margin-bottom: 26px;
+        }
+
+        .header-badge {
+            display: inline-block;
+            background: var(--blue);
+            color: #fff;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            padding: 4px 16px;
+            border-radius: 20px;
+            margin-bottom: 10px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--text);
+            line-height: 1.2;
+        }
+
+        .header p {
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: 6px;
+        }
+
+        /* ─── GRID ─── */
+        .grid-main {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .col-left {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* ─── CARD ─── */
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .card-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .card-sub {
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 3px;
+        }
+
+        /* ─── OVERVIEW ─── */
+        .overview-body {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+            margin-top: 16px;
+        }
+
+        .donut-wrap {
+            position: relative;
+            width: 160px;
+            height: 160px;
+            flex-shrink: 0;
+        }
+
+        .donut-wrap canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .donut-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            pointer-events: none;
+        }
+
+        .donut-center .pct {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--yellow);
+            line-height: 1;
+        }
+
+        .donut-center .sub {
+            font-size: 9px;
+            color: var(--muted);
+            margin-top: 2px;
+        }
+
+        .donut-center .lbl {
+            font-size: 9px;
+            color: var(--muted);
+            margin-bottom: 2px;
+        }
+
+        .kpi-list {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .kpi-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 9px 12px;
+            border-radius: 10px;
+            border-left-width: 3px;
+            border-left-style: solid;
+        }
+
+        .kpi-item .lbl {
+            font-size: 11px;
+            color: var(--muted);
+            font-weight: 600;
+        }
+
+        .kpi-item .val {
+            font-size: 15px;
+            font-weight: 800;
+        }
+
+        /* ─── CHART CARD ─── */
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 14px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 6px;
+        }
+
+        .btn {
+            padding: 5px 12px;
+            border-radius: 8px;
+            border: 1.5px solid var(--border);
+            background: #fafbfd;
+            color: var(--muted);
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all .18s;
+            font-family: inherit;
+        }
+
+        .btn.active {
+            border-color: var(--blue);
+            background: var(--blue);
+            color: #fff;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 280px;
+        }
+
+        /* ─── MINI STATS ─── */
+        .mini-stats {
+            display: flex;
+            gap: 6px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+
+        .mini-card {
+            flex: 1 1 80px;
+            border-radius: 8px;
+            padding: 8px 10px;
+            border-left-width: 3px;
+            border-left-style: solid;
+            border-top: 1px solid transparent;
+            border-right: 1px solid transparent;
+            border-bottom: 1px solid transparent;
+        }
+
+        .mini-card .m-dept {
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .mini-card .m-pct {
+            font-size: 16px;
+            font-weight: 800;
+            margin-top: 2px;
+        }
+
+        .mini-card .m-sub {
+            font-size: 10px;
+            color: #a0b0c8;
+        }
+
+        /* ─── STATUS PANEL ─── */
+        .legend-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            margin-bottom: 20px;
+            margin-top: 12px;
+        }
+
+        .legend-pill {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 13px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .legend-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+        }
+
+        .donuts-row1 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .donuts-row2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            max-width: 67%;
+            margin: 0 auto;
+        }
+
+        .donut-dept-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: #fafbfd;
+            border: 1px solid #eef1f8;
+            border-radius: 14px;
+            padding: 14px 8px 12px;
+        }
+
+        .donut-dept-card .dept-name {
+            font-size: 12px;
+            font-weight: 700;
+            color: #4060a0;
+            margin-bottom: 6px;
+        }
+
+        .donut-dept-wrap {
+            position: relative;
+            width: 160px;
+            height: 160px;
+        }
+
+        .donut-dept-wrap canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .donut-dept-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            pointer-events: none;
+        }
+
+        .donut-dept-center .lbl2 {
+            font-size: 10px;
+            color: var(--muted);
+        }
+
+        .donut-dept-center .num {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--text);
+            line-height: 1.1;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 14px;
+            color: #b0bcd4;
+            font-size: 11px;
+        }
+
+        @media (max-width: 900px) {
+            .grid-main {
+                grid-template-columns: 1fr;
+            }
+
+            .donuts-row1 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .donuts-row2 {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <div class="header">
+        <div class="header-badge">Dashboard · Năm 2026</div>
+        <h1>Theo Dõi Tài Chính & Hồ Sơ Thanh Toán</h1>
+        <p>Tổng hợp dữ liệu thanh toán và trạng thái hồ sơ theo từng phòng ban - Trung tâm Công nghệ cao Mobifone</p>
+    </div>
+
+    <!-- MAIN GRID -->
+    <div class="grid-main">
+
+        <!-- LEFT COLUMN -->
+        <div class="col-left">
+
+            <!-- OVERVIEW CARD -->
+            <div class="card">
+                <div class="card-title">Tổng quan tài chính</div>
+                <div class="card-sub">Năm 2026 · Toàn công ty</div>
+                <div class="overview-body">
+                    <div class="donut-wrap">
+                        <canvas id="donutMain" width="160" height="160"></canvas>
+                        <div class="donut-center">
+                            <div class="lbl">Tỉ lệ hoàn thành</div>
+                            <div class="pct" id="mainPct">31%</div>
+                            <div class="sub" id="mainSub">5.175 / 16.751 tr</div>
+                        </div>
+                    </div>
+                    <div class="kpi-list">
+                        <div class="kpi-item" style="background:var(--blue-bg);border-color:var(--blue)">
+                            <span class="lbl">Tổng chi phí TH</span>
+                            <span class="val" style="color:var(--blue)" id="kpiTotal">16.751 tr</span>
+                        </div>
+                        <div class="kpi-item" style="background:var(--green-bg);border-color:var(--green)">
+                            <span class="lbl">Đã thanh toán</span>
+                            <span class="val" style="color:var(--green)" id="kpiPaid">5.175 tr</span>
+                        </div>
+                        <div class="kpi-item" style="background:var(--red-bg);border-color:var(--red)">
+                            <span class="lbl">Chưa thanh toán</span>
+                            <span class="val" style="color:var(--red)" id="kpiUnpaid">11.576 tr</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAYMENT CHART CARD -->
+            <div class="card">
+                <div class="chart-header">
+                    <div>
+                        <div class="card-title">Theo dõi số tiền đã thanh toán</div>
+                        <div class="card-sub">Chi phí thực hiện vs. Đã thanh toán — 2026</div>
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn active" id="btnValue" onclick="switchMode('value')">Giá trị</button>
+                        <button class="btn" id="btnRate" onclick="switchMode('rate')">Tỉ lệ</button>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="barChart"></canvas>
+                </div>
+                <div class="mini-stats" id="miniStats"></div>
+            </div>
+
+        </div><!-- end col-left -->
+
+        <!-- RIGHT COLUMN: STATUS DONUTS -->
+        <div class="card">
+            <div class="card-title">Theo dõi số lượng hồ sơ theo trạng thái</div>
+            <div class="card-sub">Phân loại hồ sơ theo từng phòng ban</div>
+
+            <div class="legend-row" id="legendRow"></div>
+
+            <div class="donuts-row1" id="donutsRow1"></div>
+            <div class="donuts-row2" id="donutsRow2"></div>
+        </div>
+
+    </div><!-- end main grid -->
+
+    <div class="footer">Nguồn dữ liệu: Bảng tổng hợp Nợ Hồ sơ thanh toán – Năm 2026</div>
+
+    <script>
+        // ── DATA ──────────────────────────────────────────────
+        const deptData = [
+            { dept: "Tổng hợp", chiPhi: 6144, daTT: 4710, color: "#5b8fe8", light: "#dde9fc", bg: "#eff6ff", border: "#7aacef", text: "#4872c4" },
+            { dept: "KH CN", chiPhi: 45, daTT: 45, color: "#4baa6e", light: "#c8eeda", bg: "#f0fdf4", border: "#6ec897", text: "#3a8a5a" },
+            { dept: "SX CN", chiPhi: 1294, daTT: 138, color: "#e0a040", light: "#faeac8", bg: "#fffbeb", border: "#e8b86a", text: "#b87c2a" },
+            { dept: "BDưỡng TB", chiPhi: 8412, daTT: 282, color: "#e06060", light: "#fadadb", bg: "#fff5f5", border: "#e89090", text: "#c04848" },
+            { dept: "ĐMST", chiPhi: 856, daTT: 0, color: "#9b74d8", light: "#e8dcf8", bg: "#f8f4ff", border: "#c0a0e8", text: "#7050b0" },
+        ];
+
+        const statusData = [
+            { dept: "Tổng hợp", daTT: 20, chuaNop: 28, boSung: 2, ktCheck: 0, dangTrinh: 0 },
+            { dept: "KH CN", daTT: 0, chuaNop: 0, boSung: 0, ktCheck: 0, dangTrinh: 0 },
+            { dept: "SX CN", daTT: 6, chuaNop: 3, boSung: 1, ktCheck: 0, dangTrinh: 2 },
+            { dept: "BDưỡng TB", daTT: 24, chuaNop: 34, boSung: 5, ktCheck: 0, dangTrinh: 17 },
+            { dept: "ĐMST", daTT: 2, chuaNop: 3, boSung: 0, ktCheck: 6, dangTrinh: 2 },
+        ];
+
+        const statusSlices = [
+            { key: "daTT", name: "Đã Thanh Toán", color: "#4baa6e" },
+            { key: "chuaNop", name: "Chưa nộp", color: "#e06060" },
+            { key: "boSung", name: "Bổ sung", color: "#e8854a" },
+            { key: "ktCheck", name: "KT check", color: "#9b74d8" },
+            { key: "dangTrinh", name: "Đang trình", color: "#5b8fe8" },
+        ];
+
+        const fmt = v => (v ?? 0).toLocaleString("vi-VN");
+        const totalChiPhi = deptData.reduce((s, d) => s + d.chiPhi, 0);
+        const totalDaTT = deptData.reduce((s, d) => s + d.daTT, 0);
+        const totalTiLe = Math.round((totalDaTT / totalChiPhi) * 100);
+
+        // ── KPI ──────────────────────────────────────────────
+        document.getElementById("mainPct").textContent = totalTiLe + "%";
+        document.getElementById("mainSub").textContent = `${fmt(totalDaTT)} / ${fmt(totalChiPhi)} tr`;
+        document.getElementById("kpiTotal").textContent = `${fmt(totalChiPhi)} tr`;
+        document.getElementById("kpiPaid").textContent = `${fmt(totalDaTT)} tr`;
+        document.getElementById("kpiUnpaid").textContent = `${fmt(totalChiPhi - totalDaTT)} tr`;
+
+        // Register datalabels plugin (disabled per-chart where not needed)
+        Chart.register(ChartDataLabels);
+
+        // ── MAIN DONUT ────────────────────────────────────────
+        new Chart(document.getElementById("donutMain"), {
+            type: "doughnut",
+            data: {
+                datasets: [{
+                    data: [totalDaTT, totalChiPhi - totalDaTT],
+                    backgroundColor: ["#4baa6e", "#edf0f7"],
+                    borderWidth: 0,
+                }]
+            },
+            options: {
+                cutout: "68%", rotation: -90, circumference: 360,
+                plugins: { legend: { display: false }, tooltip: { enabled: false }, datalabels: { display: false } },
+                animation: { animateRotate: true, duration: 900 },
+            }
+        });
+
+        // ── BAR CHART ─────────────────────────────────────────
+        let barChart, currentMode = "value";
+        const labels = deptData.map(d => d.dept);
+        const values = deptData.map(d => d.chiPhi);
+        const paid = deptData.map(d => d.daTT);
+        const rates = deptData.map(d => d.chiPhi === 0 ? 0 : Math.round((d.daTT / d.chiPhi) * 100));
+        const colors = deptData.map(d => d.color);
+        const lights = deptData.map(d => d.light);
+
+        function buildBarChart(mode) {
+            if (barChart) barChart.destroy();
+            const ctx = document.getElementById("barChart").getContext("2d");
+
+            if (mode === "value") {
+                barChart = new Chart(ctx, {
+                    type: "bar",
+                    data: {
+                        labels,
+                        datasets: [
+                            {
+                                label: "Chi phí TH",
+                                data: values,
+                                backgroundColor: lights,
+                                borderColor: colors,
+                                borderWidth: 1.5,
+                                borderRadius: 5,
+                                barPercentage: .6,
+                                categoryPercentage: .7,
+                            },
+                            {
+                                label: "Đã TT",
+                                data: paid,
+                                backgroundColor: colors,
+                                borderRadius: 5,
+                                barPercentage: .6,
+                                categoryPercentage: .7,
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true, maintainAspectRatio: false,
+                        plugins: {
+                            legend: { labels: { font: { size: 11, weight: "600" }, color: "#5060a0", boxWidth: 14, padding: 16 } },
+                            tooltip: {
+                                callbacks: {
+                                    label(ctx) { return ` ${ctx.dataset.label}: ${fmt(ctx.parsed.y)} tr`; }
+                                }
+                            },
+                            datalabels: { display: false }
+                        },
+                        scales: {
+                            x: { ticks: { font: { size: 11, weight: "600" }, color: "#5060a0" }, grid: { display: false } },
+                            y: { ticks: { font: { size: 10 }, color: "#8898b8", callback: v => `${(v / 1000).toFixed(0)}k` }, grid: { color: "#f0f2f8" }, border: { display: false } }
+                        }
+                    }
+                });
+            } else {
+                barChart = new Chart(ctx, {
+                    type: "bar",
+                    data: {
+                        labels,
+                        datasets: [
+                            {
+                                label: "Tỉ lệ (%)",
+                                data: rates,
+                                backgroundColor: colors,
+                                borderRadius: 7,
+                                barPercentage: .6,
+                                categoryPercentage: .65,
+                            },
+                            {
+                                label: "Tỉ lệ (%)",
+                                data: rates,
+                                type: "line",
+                                borderColor: "#b0b8d0",
+                                borderWidth: 2,
+                                borderDash: [5, 4],
+                                pointBackgroundColor: "#fff",
+                                pointBorderColor: "#7aacef",
+                                pointBorderWidth: 2,
+                                pointRadius: 5,
+                                fill: false,
+                                tension: .3,
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true, maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: { callbacks: { label(ctx) { return ` ${ctx.parsed.y}%`; } } },
+                            datalabels: { display: false }
+                        },
+                        scales: {
+                            x: { ticks: { font: { size: 11, weight: "600" }, color: "#5060a0" }, grid: { display: false } },
+                            y: { min: 0, max: 110, ticks: { font: { size: 10 }, color: "#8898b8", callback: v => `${v}%` }, grid: { color: "#f0f2f8" }, border: { display: false } }
+                        }
+                    }
+                });
+            }
+        }
+        buildBarChart("value");
+
+        function switchMode(mode) {
+            currentMode = mode;
+            document.getElementById("btnValue").classList.toggle("active", mode === "value");
+            document.getElementById("btnRate").classList.toggle("active", mode === "rate");
+            buildBarChart(mode);
+        }
+
+        // ── MINI STATS ────────────────────────────────────────
+        const ms = document.getElementById("miniStats");
+        deptData.forEach(d => {
+            const tiLe = d.chiPhi === 0 ? 0 : Math.round((d.daTT / d.chiPhi) * 100);
+            ms.innerHTML += `
+    <div class="mini-card" style="background:${d.bg};border-left-color:${d.border};">
+      <div class="m-dept" style="color:${d.text}">${d.dept}</div>
+      <div class="m-pct"  style="color:${d.text}">${tiLe}%</div>
+      <div class="m-sub">${fmt(d.daTT)}/${fmt(d.chiPhi)}</div>
+    </div>`;
+        });
+
+        // ── LEGEND ROW ────────────────────────────────────────
+        const lr = document.getElementById("legendRow");
+        statusSlices.forEach(s => {
+            lr.innerHTML += `
+    <div class="legend-pill" style="background:${s.color}18;border:1px solid ${s.color}44">
+      <div class="legend-dot" style="background:${s.color}"></div>
+      <span style="color:${s.color}">${s.name}</span>
+    </div>`;
+        });
+
+        // ── DEPT DONUTS ───────────────────────────────────────
+        function makeDeptDonut(container, dept, idx) {
+            const data = statusData[idx];
+            const slices = statusSlices.map(s => ({ name: s.name, value: data[s.key], color: s.color })).filter(s => s.value > 0);
+            const total = slices.reduce((s, d) => s + d.value, 0);
+
+            container.innerHTML = `
+    <div class="donut-dept-card">
+      <div class="dept-name">${dept}</div>
+      <div class="donut-dept-wrap">
+        <canvas id="dc_${idx}" width="160" height="160"></canvas>
+        <div class="donut-dept-center">
+          <div class="lbl2">Tổng</div>
+          <div class="num">${total}</div>
+        </div>
+      </div>
+    </div>`;
+
+            setTimeout(() => {
+                const ctx = document.getElementById(`dc_${idx}`).getContext("2d");
+                new Chart(ctx, {
+                    type: "doughnut",
+                    data: {
+                        labels: slices.map(s => s.name),
+                        datasets: [{
+                            data: total > 0 ? slices.map(s => s.value) : [1],
+                            backgroundColor: total > 0 ? slices.map(s => s.color) : ["#eef1f8"],
+                            borderWidth: 2, borderColor: "#fff",
+                        }]
+                    },
+                    options: {
+                        cutout: "60%", rotation: -90, circumference: 360,
+                        layout: { padding: 30 },
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                enabled: total > 0,
+                                callbacks: { label(c) { return ` ${c.label}: ${c.parsed} (${Math.round(c.parsed / total * 100)}%)`; } }
+                            },
+                            datalabels: {
+                                display(ctx) {
+                                    if (!total) return false;
+                                    const val = ctx.dataset.data[ctx.dataIndex];
+                                    return (val / total) >= 0.05;
+                                },
+                                formatter(value) {
+                                    const pct = Math.round((value / total) * 100);
+                                    return value + '\n' + pct + '%';
+                                },
+                                color(ctx) {
+                                    return ctx.dataset.backgroundColor[ctx.dataIndex];
+                                },
+                                anchor: 'end',
+                                align: 'end',
+                                offset: 6,
+                                font: { size: 10, weight: '800', family: "'Be Vietnam Pro', sans-serif" },
+                                textAlign: 'center',
+                            }
+                        },
+                        animation: { animateRotate: true, duration: 900 },
+                    }
+                });
+            }, 0);
+        }
+
+        const r1 = document.getElementById("donutsRow1");
+        const r2 = document.getElementById("donutsRow2");
+        [0, 1, 2].forEach(i => {
+            const div = document.createElement("div");
+            r1.appendChild(div);
+            makeDeptDonut(div, statusData[i].dept, i);
+        });
+        [3, 4].forEach(i => {
+            const div = document.createElement("div");
+            r2.appendChild(div);
+            makeDeptDonut(div, statusData[i].dept, i);
+        });
+    </script>
+</body>
+
+</html>
