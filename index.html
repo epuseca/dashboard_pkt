@@ -362,6 +362,72 @@
             line-height: 1.1;
         }
 
+        .dept-stat-table {
+            width: 100%;
+            margin-top: 10px;
+            border-collapse: collapse;
+            font-size: 11px;
+        }
+
+        .dept-stat-table tr {
+            border-top: 1px solid #eef1f8;
+        }
+
+        .dept-stat-table tr:first-child {
+            border-top: none;
+        }
+
+        .dept-stat-table td {
+            padding: 5px 4px;
+            vertical-align: middle;
+        }
+
+        .stat-name-cell {
+            display: flex;
+            align-items: center;
+            color: #5a6a8a;
+            font-weight: 600;
+        }
+
+        .stat-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 5px;
+            flex-shrink: 0;
+        }
+
+        .stat-count {
+            text-align: right;
+            font-weight: 800;
+            color: #2e3a5a;
+        }
+
+        .stat-pct {
+            text-align: right;
+            color: #8898b8;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .stat-bar-cell {
+            width: 55px;
+            padding-right: 4px;
+        }
+
+        .stat-bar-bg {
+            background: #eef1f8;
+            border-radius: 4px;
+            height: 5px;
+            overflow: hidden;
+        }
+
+        .stat-bar-fill {
+            height: 5px;
+            border-radius: 4px;
+        }
+
         .footer {
             text-align: center;
             margin-top: 14px;
@@ -402,31 +468,63 @@
 
             <!-- OVERVIEW CARD -->
             <div class="card">
-                <div class="card-title">Tổng quan tài chính</div>
-                <div class="card-sub">Năm 2026 · Toàn công ty</div>
-                <div class="overview-body">
-                    <div class="donut-wrap">
-                        <canvas id="donutMain" width="160" height="160"></canvas>
-                        <div class="donut-center">
-                            <div class="lbl">Tỉ lệ hoàn thành</div>
-                            <div class="pct" id="mainPct">31%</div>
-                            <div class="sub" id="mainSub">5.175 / 16.751 tr</div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+
+                    <!-- CỘT TRÁI: Tài chính -->
+                    <div>
+                        <div class="card-title">Tổng quan tài chính</div>
+                        <div class="card-sub">Năm 2026 · Toàn công ty</div>
+                        <div class="overview-body">
+                            <div class="donut-wrap">
+                                <canvas id="donutMain" width="160" height="160"></canvas>
+                                <div class="donut-center">
+                                    <div class="lbl">Tỉ lệ hoàn thành</div>
+                                    <div class="pct" id="mainPct">31%</div>
+                                    <div class="sub" id="mainSub">5.175 / 16.751 tr</div>
+                                </div>
+                            </div>
+                            <div class="kpi-list">
+                                <div class="kpi-item" style="background:var(--blue-bg);border-color:var(--blue)">
+                                    <span class="lbl">Tổng chi phí thưc hiện</span>
+                                    <span class="val" style="color:var(--blue)" id="kpiTotal">16.751 tr</span>
+                                </div>
+                                <div class="kpi-item" style="background:var(--green-bg);border-color:var(--green)">
+                                    <span class="lbl">Đã thanh toán</span>
+                                    <span class="val" style="color:var(--green)" id="kpiPaid">5.175 tr</span>
+                                </div>
+                                <div class="kpi-item" style="background:var(--red-bg);border-color:var(--red)">
+                                    <span class="lbl">Chưa thanh toán</span>
+                                    <span class="val" style="color:var(--red)" id="kpiUnpaid">11.576 tr</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="kpi-list">
-                        <div class="kpi-item" style="background:var(--blue-bg);border-color:var(--blue)">
-                            <span class="lbl">Tổng chi phí TH</span>
-                            <span class="val" style="color:var(--blue)" id="kpiTotal">16.751 tr</span>
-                        </div>
-                        <div class="kpi-item" style="background:var(--green-bg);border-color:var(--green)">
-                            <span class="lbl">Đã thanh toán</span>
-                            <span class="val" style="color:var(--green)" id="kpiPaid">5.175 tr</span>
-                        </div>
-                        <div class="kpi-item" style="background:var(--red-bg);border-color:var(--red)">
-                            <span class="lbl">Chưa thanh toán</span>
-                            <span class="val" style="color:var(--red)" id="kpiUnpaid">11.576 tr</span>
+
+                    <!-- CỘT PHẢI: Hồ sơ theo trạng thái -->
+                    <div style="border-left:1px solid var(--border);padding-left:16px;">
+                        <div class="card-title">Tổng hồ sơ theo trạng thái</div>
+                        <div class="card-sub">Toàn công ty · Năm 2026</div>
+                        <div style="display:flex;align-items:center;gap:14px;margin-top:12px;">
+                            <!-- Donut hồ sơ -->
+                            <div style="position:relative;width:130px;height:130px;flex-shrink:0;">
+                                <canvas id="donutStatus" width="130" height="130"></canvas>
+                                <div
+                                    style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none;">
+                                    <div style="font-size:9px;color:var(--muted);">Tổng</div>
+                                    <div id="statusTotal"
+                                        style="font-size:18px;font-weight:800;color:var(--text);line-height:1.1;">0
+                                    </div>
+                                    <div style="font-size:9px;color:var(--muted);">bộ</div>
+                                </div>
+                            </div>
+                            <!-- Bảng chi tiết -->
+                            <div style="flex:1;min-width:0;">
+                                <table id="summaryStatusTable"
+                                    style="width:100%;border-collapse:collapse;font-size:11px;"></table>
+                            </div>
                         </div>
                     </div>
+
                 </div>
             </div>
 
@@ -435,7 +533,7 @@
                 <div class="chart-header">
                     <div>
                         <div class="card-title">Theo dõi số tiền đã thanh toán</div>
-                        <div class="card-sub">Chi phí thực hiện vs. Đã thanh toán — 2026</div>
+                        <div class="card-sub">Chi phí thực hiện và Đã thanh toán — 2026</div>
                     </div>
                     <div class="btn-group">
                         <button class="btn active" id="btnValue" onclick="switchMode('value')">Giá trị</button>
@@ -463,31 +561,31 @@
 
     </div><!-- end main grid -->
 
-    <div class="footer">Nguồn dữ liệu: Bảng tổng hợp Nợ Hồ sơ thanh toán – Năm 2026</div>
+    <div class="footer" hidden>Nguồn dữ liệu: Bảng tổng hợp Nợ Hồ sơ thanh toán – Năm 2026</div>
 
     <script>
         // ── DATA ──────────────────────────────────────────────
         const deptData = [
             { dept: "Tổng hợp", chiPhi: 6144, daTT: 4710, color: "#5b8fe8", light: "#dde9fc", bg: "#eff6ff", border: "#7aacef", text: "#4872c4" },
-            { dept: "KH CN", chiPhi: 45, daTT: 45, color: "#4baa6e", light: "#c8eeda", bg: "#f0fdf4", border: "#6ec897", text: "#3a8a5a" },
-            { dept: "SX CN", chiPhi: 1294, daTT: 138, color: "#e0a040", light: "#faeac8", bg: "#fffbeb", border: "#e8b86a", text: "#b87c2a" },
-            { dept: "BDưỡng TB", chiPhi: 8412, daTT: 282, color: "#e06060", light: "#fadadb", bg: "#fff5f5", border: "#e89090", text: "#c04848" },
-            { dept: "ĐMST", chiPhi: 856, daTT: 0, color: "#9b74d8", light: "#e8dcf8", bg: "#f8f4ff", border: "#c0a0e8", text: "#7050b0" },
+            { dept: "Khoa học công nghệ", chiPhi: 45, daTT: 45, color: "#4baa6e", light: "#c8eeda", bg: "#f0fdf4", border: "#6ec897", text: "#3a8a5a" },
+            { dept: "Sản xuất công nghiệp", chiPhi: 1294, daTT: 138, color: "#e0a040", light: "#faeac8", bg: "#fffbeb", border: "#e8b86a", text: "#b87c2a" },
+            { dept: "Bảo dưỡng thiết bị", chiPhi: 8412, daTT: 282, color: "#e06060", light: "#fadadb", bg: "#fff5f5", border: "#e89090", text: "#c04848" },
+            { dept: "Đổi mới sáng tạo", chiPhi: 856, daTT: 0, color: "#9b74d8", light: "#e8dcf8", bg: "#f8f4ff", border: "#c0a0e8", text: "#7050b0" },
         ];
 
         const statusData = [
             { dept: "Tổng hợp", daTT: 20, chuaNop: 28, boSung: 2, ktCheck: 0, dangTrinh: 0 },
-            { dept: "KH CN", daTT: 0, chuaNop: 0, boSung: 0, ktCheck: 0, dangTrinh: 0 },
-            { dept: "SX CN", daTT: 6, chuaNop: 3, boSung: 1, ktCheck: 0, dangTrinh: 2 },
-            { dept: "BDưỡng TB", daTT: 24, chuaNop: 34, boSung: 5, ktCheck: 0, dangTrinh: 17 },
-            { dept: "ĐMST", daTT: 2, chuaNop: 3, boSung: 0, ktCheck: 6, dangTrinh: 2 },
+            { dept: "Khoa học công nghệ", daTT: 0, chuaNop: 0, boSung: 0, ktCheck: 0, dangTrinh: 0 },
+            { dept: "Sản xuất công nghiệp", daTT: 6, chuaNop: 3, boSung: 1, ktCheck: 0, dangTrinh: 2 },
+            { dept: "Bảo dưỡng thiết bị", daTT: 24, chuaNop: 34, boSung: 5, ktCheck: 0, dangTrinh: 17 },
+            { dept: "Đổi mới sáng tạo", daTT: 2, chuaNop: 3, boSung: 0, ktCheck: 6, dangTrinh: 2 },
         ];
 
         const statusSlices = [
             { key: "daTT", name: "Đã Thanh Toán", color: "#4baa6e" },
             { key: "chuaNop", name: "Chưa nộp", color: "#e06060" },
             { key: "boSung", name: "Bổ sung", color: "#e8854a" },
-            { key: "ktCheck", name: "KT check", color: "#9b74d8" },
+            { key: "ktCheck", name: "Kế toán check", color: "#9b74d8" },
             { key: "dangTrinh", name: "Đang trình", color: "#5b8fe8" },
         ];
 
@@ -523,6 +621,72 @@
             }
         });
 
+        // ── STATUS SUMMARY DONUT + TABLE ─────────────────────
+        (function () {
+            const totalBySlice = statusSlices.map(s => ({
+                ...s,
+                sum: statusData.reduce((acc, d) => acc + (d[s.key] || 0), 0)
+            })).filter(s => s.sum > 0);
+            const grandTotal = totalBySlice.reduce((a, s) => a + s.sum, 0);
+
+            document.getElementById("statusTotal").textContent = grandTotal;
+
+            // Donut chart
+            new Chart(document.getElementById("donutStatus"), {
+                type: "doughnut",
+                data: {
+                    labels: totalBySlice.map(s => s.name),
+                    datasets: [{
+                        data: totalBySlice.map(s => s.sum),
+                        backgroundColor: totalBySlice.map(s => s.color),
+                        borderWidth: 2, borderColor: "#fff",
+                    }]
+                },
+                options: {
+                    cutout: "62%", rotation: -90,
+                    layout: { padding: 4 },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label(c) { return ` ${c.label}: ${c.parsed} bộ (${Math.round(c.parsed / grandTotal * 100)}%)`; }
+                            }
+                        },
+                        datalabels: { display: false }
+                    },
+                    animation: { animateRotate: true, duration: 900 },
+                }
+            });
+
+            // Table
+            const tbody = document.getElementById("summaryStatusTable");
+            totalBySlice.forEach((s, i) => {
+                const pct = Math.round((s.sum / grandTotal) * 100);
+                const row = document.createElement("tr");
+                row.style.borderTop = i === 0 ? "none" : "1px solid #eef1f8";
+                row.innerHTML = `
+      <td style="padding:5px 3px;vertical-align:middle;">
+        <div style="display:flex;align-items:center;gap:6px;">
+          <span style="width:8px;height:8px;border-radius:50%;background:${s.color};display:inline-block;flex-shrink:0;"></span>
+          <span style="color:#5a6a8a;font-weight:600;font-size:11px;white-space:nowrap;">${s.name}</span>
+        </div>
+      </td>
+      <td style="padding:5px 4px;text-align:right;font-weight:800;color:#2e3a5a;font-size:13px;">${s.sum}</td>
+      <td style="padding:5px 3px;text-align:right;color:#8898b8;font-weight:600;font-size:10px;">${pct}%</td>
+    `;
+                tbody.appendChild(row);
+            });
+            // Tổng
+            const tr = document.createElement("tr");
+            tr.style.cssText = "border-top:2px solid #dde3f0;";
+            tr.innerHTML = `
+    <td style="padding:6px 3px;font-weight:800;color:var(--text);font-size:11px;">Tổng</td>
+    <td style="padding:6px 4px;text-align:right;font-weight:900;color:var(--blue);font-size:14px;">${grandTotal}</td>
+    <td style="padding:6px 3px;text-align:right;color:var(--blue);font-weight:700;font-size:10px;">100%</td>
+  `;
+            tbody.appendChild(tr);
+        })();
+
         // ── BAR CHART ─────────────────────────────────────────
         let barChart, currentMode = "value";
         const labels = deptData.map(d => d.dept);
@@ -543,7 +707,7 @@
                         labels,
                         datasets: [
                             {
-                                label: "Chi phí TH",
+                                label: "Chi phí thực hiện",
                                 data: values,
                                 backgroundColor: lights,
                                 borderColor: colors,
@@ -553,7 +717,7 @@
                                 categoryPercentage: .7,
                             },
                             {
-                                label: "Đã TT",
+                                label: "Đã thanh toán",
                                 data: paid,
                                 backgroundColor: colors,
                                 borderRadius: 5,
@@ -672,6 +836,22 @@
         </div>
       </div>
     </div>`;
+
+            // Build stat table
+            const tableRows = statusSlices.map(s => {
+                const val = data[s.key] || 0;
+                const pct = total > 0 ? Math.round((val / total) * 100) : 0;
+                if (val === 0) return '';
+                return `<tr>
+      <td><div class="stat-name-cell"><span class="stat-dot" style="background:${s.color}"></span>${s.name}</div></td>
+      <td class="stat-bar-cell"><div class="stat-bar-bg"><div class="stat-bar-fill" style="width:${pct}%;background:${s.color}"></div></div></td>
+      <td class="stat-count">${val}</td>
+      <td class="stat-pct">${pct}%</td>
+    </tr>`;
+            }).join('');
+            if (tableRows) {
+                container.querySelector('.donut-dept-card').innerHTML += `<table class="dept-stat-table">${tableRows}</table>`;
+            }
 
             setTimeout(() => {
                 const ctx = document.getElementById(`dc_${idx}`).getContext("2d");
