@@ -57,6 +57,7 @@
         .header {
             text-align: center;
             margin-bottom: 26px;
+            position: relative;
         }
 
         .header-badge {
@@ -83,6 +84,39 @@
             font-size: 12px;
             color: var(--muted);
             margin-top: 6px;
+        }
+
+        /* ─── NÚT TẢI EXCEL ─── */
+        .btn-download {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 6px 13px;
+            background: var(--blue);
+            color: #fff;
+            font-family: 'Be Vietnam Pro', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            border-radius: 8px;
+            text-decoration: none;
+            box-shadow: 0 2px 8px rgba(91, 143, 232, .28);
+            transition: background .18s, box-shadow .18s, transform .15s;
+            white-space: nowrap;
+        }
+
+        .btn-download:hover {
+            background: #3f72cc;
+            box-shadow: 0 4px 14px rgba(91, 143, 232, .38);
+            transform: translateY(calc(-50% - 1px));
+        }
+
+        .btn-download:active {
+            transform: translateY(-50%);
+            box-shadow: 0 1px 4px rgba(91, 143, 232, .2);
         }
 
         /* ─── GRID ─── */
@@ -447,6 +481,17 @@
             .donuts-row2 {
                 max-width: 100%;
             }
+
+            .btn-download {
+                position: static;
+                transform: none;
+                margin-top: 14px;
+                display: inline-flex;
+            }
+
+            .btn-download:hover {
+                transform: translateY(-1px);
+            }
         }
     </style>
 </head>
@@ -458,6 +503,17 @@
         <div class="header-badge">Dashboard · Kế toán · Năm 2026</div>
         <h1>BÁO CÁO TÌNH HÌNH THANH TOÁN NĂM 2026</h1>
         <p>Tổng hợp dữ liệu thanh toán và trạng thái hồ sơ theo từng phòng ban - Trung tâm Công nghệ cao Mobifone</p>
+
+        <!-- ĐỔI "data.xlsx" THÀNH TÊN FILE EXCEL THỰC TẾ CỦA BẠN -->
+        <a href="Báo cáo thanh toán 16032026_1.xlsx" download class="btn-download">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="7 10 12 15 17 10" />
+                <line x1="12" y1="15" x2="12" y2="3" />
+            </svg>
+            Tải dữ liệu (.xlsx)
+        </a>
     </div>
 
     <!-- MAIN GRID -->
@@ -469,8 +525,6 @@
             <!-- OVERVIEW CARD -->
             <div class="card">
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-
-                    <!-- CỘT TRÁI: Tài chính -->
                     <div>
                         <div class="card-title">Tổng quan tình hình thanh toán</div>
                         <div class="card-sub">Năm 2026 · Toàn trung tâm</div>
@@ -485,7 +539,7 @@
                             </div>
                             <div class="kpi-list">
                                 <div class="kpi-item" style="background:var(--blue-bg);border-color:var(--blue)">
-                                    <span class="lbl">Tổng chi phí thưc hiện</span>
+                                    <span class="lbl">Tổng chi phí thực hiện</span>
                                     <span class="val" style="color:var(--blue)" id="kpiTotal">16.751 tr</span>
                                 </div>
                                 <div class="kpi-item" style="background:var(--green-bg);border-color:var(--green)">
@@ -500,12 +554,10 @@
                         </div>
                     </div>
 
-                    <!-- CỘT PHẢI: Hồ sơ theo trạng thái -->
                     <div style="border-left:1px solid var(--border);padding-left:16px;">
                         <div class="card-title">Tổng hồ sơ theo trạng thái</div>
                         <div class="card-sub">Toàn trung tâm · Năm 2026</div>
                         <div style="display:flex;align-items:center;gap:14px;margin-top:12px;">
-                            <!-- Donut hồ sơ -->
                             <div style="position:relative;width:130px;height:130px;flex-shrink:0;">
                                 <canvas id="donutStatus" width="130" height="130"></canvas>
                                 <div
@@ -517,14 +569,12 @@
                                     <div style="font-size:9px;color:var(--muted);">bộ</div>
                                 </div>
                             </div>
-                            <!-- Bảng chi tiết -->
                             <div style="flex:1;min-width:0;">
                                 <table id="summaryStatusTable"
                                     style="width:100%;border-collapse:collapse;font-size:11px;"></table>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
 
@@ -548,13 +598,11 @@
 
         </div><!-- end col-left -->
 
-        <!-- RIGHT COLUMN: STATUS DONUTS -->
+        <!-- RIGHT COLUMN -->
         <div class="card">
             <div class="card-title">Theo dõi số lượng hồ sơ theo trạng thái</div>
             <div class="card-sub">Phân loại hồ sơ theo từng phòng ban</div>
-
             <div class="legend-row" id="legendRow"></div>
-
             <div class="donuts-row1" id="donutsRow1"></div>
             <div class="donuts-row2" id="donutsRow2"></div>
         </div>
@@ -564,7 +612,6 @@
     <div class="footer" hidden>Nguồn dữ liệu: Bảng tổng hợp Nợ Hồ sơ thanh toán – Năm 2026</div>
 
     <script>
-        // ── DATA ──────────────────────────────────────────────
         const deptData = [
             { dept: "Tổng hợp", chiPhi: 6144, daTT: 4710, color: "#5b8fe8", light: "#dde9fc", bg: "#eff6ff", border: "#7aacef", text: "#4872c4" },
             { dept: "Khoa học công nghệ", chiPhi: 45, daTT: 45, color: "#4baa6e", light: "#c8eeda", bg: "#f0fdf4", border: "#6ec897", text: "#3a8a5a" },
@@ -594,26 +641,18 @@
         const totalDaTT = deptData.reduce((s, d) => s + d.daTT, 0);
         const totalTiLe = Math.round((totalDaTT / totalChiPhi) * 100);
 
-        // ── KPI ──────────────────────────────────────────────
         document.getElementById("mainPct").textContent = totalTiLe + "%";
         document.getElementById("mainSub").textContent = `${fmt(totalDaTT)} / ${fmt(totalChiPhi)} tr`;
         document.getElementById("kpiTotal").textContent = `${fmt(totalChiPhi)} tr`;
         document.getElementById("kpiPaid").textContent = `${fmt(totalDaTT)} tr`;
         document.getElementById("kpiUnpaid").textContent = `${fmt(totalChiPhi - totalDaTT)} tr`;
 
-        // Register datalabels plugin (disabled per-chart where not needed)
         Chart.register(ChartDataLabels);
 
         // ── MAIN DONUT ────────────────────────────────────────
         new Chart(document.getElementById("donutMain"), {
             type: "doughnut",
-            data: {
-                datasets: [{
-                    data: [totalDaTT, totalChiPhi - totalDaTT],
-                    backgroundColor: ["#4baa6e", "#edf0f7"],
-                    borderWidth: 0,
-                }]
-            },
+            data: { datasets: [{ data: [totalDaTT, totalChiPhi - totalDaTT], backgroundColor: ["#4baa6e", "#edf0f7"], borderWidth: 0 }] },
             options: {
                 cutout: "68%", rotation: -90, circumference: 360,
                 plugins: { legend: { display: false }, tooltip: { enabled: false }, datalabels: { display: false } },
@@ -624,66 +663,50 @@
         // ── STATUS SUMMARY DONUT + TABLE ─────────────────────
         (function () {
             const totalBySlice = statusSlices.map(s => ({
-                ...s,
-                sum: statusData.reduce((acc, d) => acc + (d[s.key] || 0), 0)
+                ...s, sum: statusData.reduce((acc, d) => acc + (d[s.key] || 0), 0)
             })).filter(s => s.sum > 0);
             const grandTotal = totalBySlice.reduce((a, s) => a + s.sum, 0);
-
             document.getElementById("statusTotal").textContent = grandTotal;
 
-            // Donut chart
             new Chart(document.getElementById("donutStatus"), {
                 type: "doughnut",
                 data: {
                     labels: totalBySlice.map(s => s.name),
-                    datasets: [{
-                        data: totalBySlice.map(s => s.sum),
-                        backgroundColor: totalBySlice.map(s => s.color),
-                        borderWidth: 2, borderColor: "#fff",
-                    }]
+                    datasets: [{ data: totalBySlice.map(s => s.sum), backgroundColor: totalBySlice.map(s => s.color), borderWidth: 2, borderColor: "#fff" }]
                 },
                 options: {
-                    cutout: "62%", rotation: -90,
-                    layout: { padding: 4 },
+                    cutout: "62%", rotation: -90, layout: { padding: 4 },
                     plugins: {
                         legend: { display: false },
-                        tooltip: {
-                            callbacks: {
-                                label(c) { return ` ${c.label}: ${c.parsed} bộ (${Math.round(c.parsed / grandTotal * 100)}%)`; }
-                            }
-                        },
+                        tooltip: { callbacks: { label(c) { return ` ${c.label}: ${c.parsed} bộ (${Math.round(c.parsed / grandTotal * 100)}%)`; } } },
                         datalabels: { display: false }
                     },
                     animation: { animateRotate: true, duration: 900 },
                 }
             });
 
-            // Table
             const tbody = document.getElementById("summaryStatusTable");
             totalBySlice.forEach((s, i) => {
                 const pct = Math.round((s.sum / grandTotal) * 100);
                 const row = document.createElement("tr");
                 row.style.borderTop = i === 0 ? "none" : "1px solid #eef1f8";
                 row.innerHTML = `
-      <td style="padding:5px 3px;vertical-align:middle;">
-        <div style="display:flex;align-items:center;gap:6px;">
-          <span style="width:8px;height:8px;border-radius:50%;background:${s.color};display:inline-block;flex-shrink:0;"></span>
-          <span style="color:#5a6a8a;font-weight:600;font-size:11px;white-space:nowrap;">${s.name}</span>
-        </div>
-      </td>
-      <td style="padding:5px 4px;text-align:right;font-weight:800;color:#2e3a5a;font-size:13px;">${s.sum}</td>
-      <td style="padding:5px 3px;text-align:right;color:#8898b8;font-weight:600;font-size:10px;">${pct}%</td>
-    `;
+                    <td style="padding:5px 3px;vertical-align:middle;">
+                        <div style="display:flex;align-items:center;gap:6px;">
+                            <span style="width:8px;height:8px;border-radius:50%;background:${s.color};display:inline-block;flex-shrink:0;"></span>
+                            <span style="color:#5a6a8a;font-weight:600;font-size:11px;white-space:nowrap;">${s.name}</span>
+                        </div>
+                    </td>
+                    <td style="padding:5px 4px;text-align:right;font-weight:800;color:#2e3a5a;font-size:13px;">${s.sum}</td>
+                    <td style="padding:5px 3px;text-align:right;color:#8898b8;font-weight:600;font-size:10px;">${pct}%</td>`;
                 tbody.appendChild(row);
             });
-            // Tổng
             const tr = document.createElement("tr");
             tr.style.cssText = "border-top:2px solid #dde3f0;";
             tr.innerHTML = `
-    <td style="padding:6px 3px;font-weight:800;color:var(--text);font-size:11px;">Tổng</td>
-    <td style="padding:6px 4px;text-align:right;font-weight:900;color:var(--blue);font-size:14px;">${grandTotal}</td>
-    <td style="padding:6px 3px;text-align:right;color:var(--blue);font-weight:700;font-size:10px;">100%</td>
-  `;
+                <td style="padding:6px 3px;font-weight:800;color:var(--text);font-size:11px;">Tổng</td>
+                <td style="padding:6px 4px;text-align:right;font-weight:900;color:var(--blue);font-size:14px;">${grandTotal}</td>
+                <td style="padding:6px 3px;text-align:right;color:var(--blue);font-weight:700;font-size:10px;">100%</td>`;
             tbody.appendChild(tr);
         })();
 
@@ -699,42 +722,21 @@
         function buildBarChart(mode) {
             if (barChart) barChart.destroy();
             const ctx = document.getElementById("barChart").getContext("2d");
-
             if (mode === "value") {
                 barChart = new Chart(ctx, {
                     type: "bar",
                     data: {
                         labels,
                         datasets: [
-                            {
-                                label: "Chi phí thực hiện",
-                                data: values,
-                                backgroundColor: lights,
-                                borderColor: colors,
-                                borderWidth: 1.5,
-                                borderRadius: 5,
-                                barPercentage: .6,
-                                categoryPercentage: .7,
-                            },
-                            {
-                                label: "Đã thanh toán",
-                                data: paid,
-                                backgroundColor: colors,
-                                borderRadius: 5,
-                                barPercentage: .6,
-                                categoryPercentage: .7,
-                            }
+                            { label: "Chi phí thực hiện", data: values, backgroundColor: lights, borderColor: colors, borderWidth: 1.5, borderRadius: 5, barPercentage: .6, categoryPercentage: .7 },
+                            { label: "Đã thanh toán", data: paid, backgroundColor: colors, borderRadius: 5, barPercentage: .6, categoryPercentage: .7 }
                         ]
                     },
                     options: {
                         responsive: true, maintainAspectRatio: false,
                         plugins: {
                             legend: { labels: { font: { size: 11, weight: "600" }, color: "#5060a0", boxWidth: 14, padding: 16 } },
-                            tooltip: {
-                                callbacks: {
-                                    label(ctx) { return ` ${ctx.dataset.label}: ${fmt(ctx.parsed.y)} tr`; }
-                                }
-                            },
+                            tooltip: { callbacks: { label(ctx) { return ` ${ctx.dataset.label}: ${fmt(ctx.parsed.y)} tr`; } } },
                             datalabels: { display: false }
                         },
                         scales: {
@@ -749,28 +751,8 @@
                     data: {
                         labels,
                         datasets: [
-                            {
-                                label: "Tỉ lệ (%)",
-                                data: rates,
-                                backgroundColor: colors,
-                                borderRadius: 7,
-                                barPercentage: .6,
-                                categoryPercentage: .65,
-                            },
-                            {
-                                label: "Tỉ lệ (%)",
-                                data: rates,
-                                type: "line",
-                                borderColor: "#b0b8d0",
-                                borderWidth: 2,
-                                borderDash: [5, 4],
-                                pointBackgroundColor: "#fff",
-                                pointBorderColor: "#7aacef",
-                                pointBorderWidth: 2,
-                                pointRadius: 5,
-                                fill: false,
-                                tension: .3,
-                            }
+                            { label: "Tỉ lệ (%)", data: rates, backgroundColor: colors, borderRadius: 7, barPercentage: .6, categoryPercentage: .65 },
+                            { label: "Tỉ lệ (%)", data: rates, type: "line", borderColor: "#b0b8d0", borderWidth: 2, borderDash: [5, 4], pointBackgroundColor: "#fff", pointBorderColor: "#7aacef", pointBorderWidth: 2, pointRadius: 5, fill: false, tension: .3 }
                         ]
                     },
                     options: {
@@ -802,21 +784,21 @@
         deptData.forEach(d => {
             const tiLe = d.chiPhi === 0 ? 0 : Math.round((d.daTT / d.chiPhi) * 100);
             ms.innerHTML += `
-    <div class="mini-card" style="background:${d.bg};border-left-color:${d.border};">
-      <div class="m-dept" style="color:${d.text}">${d.dept}</div>
-      <div class="m-pct"  style="color:${d.text}">${tiLe}%</div>
-      <div class="m-sub">${fmt(d.daTT)}/${fmt(d.chiPhi)}</div>
-    </div>`;
+                <div class="mini-card" style="background:${d.bg};border-left-color:${d.border};">
+                    <div class="m-dept" style="color:${d.text}">${d.dept}</div>
+                    <div class="m-pct"  style="color:${d.text}">${tiLe}%</div>
+                    <div class="m-sub">${fmt(d.daTT)}/${fmt(d.chiPhi)}</div>
+                </div>`;
         });
 
         // ── LEGEND ROW ────────────────────────────────────────
         const lr = document.getElementById("legendRow");
         statusSlices.forEach(s => {
             lr.innerHTML += `
-    <div class="legend-pill" style="background:${s.color}18;border:1px solid ${s.color}44">
-      <div class="legend-dot" style="background:${s.color}"></div>
-      <span style="color:${s.color}">${s.name}</span>
-    </div>`;
+                <div class="legend-pill" style="background:${s.color}18;border:1px solid ${s.color}44">
+                    <div class="legend-dot" style="background:${s.color}"></div>
+                    <span style="color:${s.color}">${s.name}</span>
+                </div>`;
         });
 
         // ── DEPT DONUTS ───────────────────────────────────────
@@ -826,28 +808,27 @@
             const total = slices.reduce((s, d) => s + d.value, 0);
 
             container.innerHTML = `
-    <div class="donut-dept-card">
-      <div class="dept-name">${dept}</div>
-      <div class="donut-dept-wrap">
-        <canvas id="dc_${idx}" width="160" height="160"></canvas>
-        <div class="donut-dept-center">
-          <div class="lbl2">Tổng</div>
-          <div class="num">${total}</div>
-        </div>
-      </div>
-    </div>`;
+                <div class="donut-dept-card">
+                    <div class="dept-name">${dept}</div>
+                    <div class="donut-dept-wrap">
+                        <canvas id="dc_${idx}" width="160" height="160"></canvas>
+                        <div class="donut-dept-center">
+                            <div class="lbl2">Tổng</div>
+                            <div class="num">${total}</div>
+                        </div>
+                    </div>
+                </div>`;
 
-            // Build stat table
             const tableRows = statusSlices.map(s => {
                 const val = data[s.key] || 0;
                 const pct = total > 0 ? Math.round((val / total) * 100) : 0;
                 if (val === 0) return '';
                 return `<tr>
-      <td><div class="stat-name-cell"><span class="stat-dot" style="background:${s.color}"></span>${s.name}</div></td>
-      <td class="stat-bar-cell"><div class="stat-bar-bg"><div class="stat-bar-fill" style="width:${pct}%;background:${s.color}"></div></div></td>
-      <td class="stat-count">${val}</td>
-      <td class="stat-pct">${pct}%</td>
-    </tr>`;
+                    <td><div class="stat-name-cell"><span class="stat-dot" style="background:${s.color}"></span>${s.name}</div></td>
+                    <td class="stat-bar-cell"><div class="stat-bar-bg"><div class="stat-bar-fill" style="width:${pct}%;background:${s.color}"></div></div></td>
+                    <td class="stat-count">${val}</td>
+                    <td class="stat-pct">${pct}%</td>
+                </tr>`;
             }).join('');
             if (tableRows) {
                 container.querySelector('.donut-dept-card').innerHTML += `<table class="dept-stat-table">${tableRows}</table>`;
@@ -877,19 +858,13 @@
                             datalabels: {
                                 display(ctx) {
                                     if (!total) return false;
-                                    const val = ctx.dataset.data[ctx.dataIndex];
-                                    return (val / total) >= 0.05;
+                                    return (ctx.dataset.data[ctx.dataIndex] / total) >= 0.05;
                                 },
                                 formatter(value) {
-                                    const pct = Math.round((value / total) * 100);
-                                    return value + '\n' + pct + '%';
+                                    return value + '\n' + Math.round((value / total) * 100) + '%';
                                 },
-                                color(ctx) {
-                                    return ctx.dataset.backgroundColor[ctx.dataIndex];
-                                },
-                                anchor: 'end',
-                                align: 'end',
-                                offset: 6,
+                                color(ctx) { return ctx.dataset.backgroundColor[ctx.dataIndex]; },
+                                anchor: 'end', align: 'end', offset: 6,
                                 font: { size: 10, weight: '800', family: "'Be Vietnam Pro', sans-serif" },
                                 textAlign: 'center',
                             }
@@ -902,16 +877,8 @@
 
         const r1 = document.getElementById("donutsRow1");
         const r2 = document.getElementById("donutsRow2");
-        [0, 1, 2].forEach(i => {
-            const div = document.createElement("div");
-            r1.appendChild(div);
-            makeDeptDonut(div, statusData[i].dept, i);
-        });
-        [3, 4].forEach(i => {
-            const div = document.createElement("div");
-            r2.appendChild(div);
-            makeDeptDonut(div, statusData[i].dept, i);
-        });
+        [0, 1, 2].forEach(i => { const div = document.createElement("div"); r1.appendChild(div); makeDeptDonut(div, statusData[i].dept, i); });
+        [3, 4].forEach(i => { const div = document.createElement("div"); r2.appendChild(div); makeDeptDonut(div, statusData[i].dept, i); });
     </script>
 </body>
 
