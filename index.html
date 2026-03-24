@@ -122,7 +122,7 @@
         /* ─── GRID ─── */
         .grid-main {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 3fr 2fr;
             gap: 16px;
             margin-bottom: 16px;
         }
@@ -301,8 +301,8 @@
         }
 
         .mini-card .m-sub {
-            font-size: 10px;
-            color: #a0b0c8;
+            font-size: 14px;
+            color: #353941;
         }
 
         /* ─── STATUS PANEL ─── */
@@ -500,9 +500,9 @@
 
     <!-- HEADER -->
     <div class="header">
-        <div class="header-badge">Dashboard · Kế toán · Năm 2026</div>
-        <h1>BÁO CÁO TÌNH HÌNH THANH TOÁN NĂM 2026</h1>
-        <p>Tổng hợp dữ liệu thanh toán và trạng thái hồ sơ theo từng phòng ban - Trung tâm Công nghệ cao Mobifone</p>
+        <div class="header-badge">Dashboard · Kế toán · Trung tâm Công nghệ Cao Mobifone · Năm 2026</div>
+        <h1>BÁO CÁO THANH TOÁN NĂM 2026</h1>
+        <p>Tổng hợp số liệu thanh toán và trạng thái hồ sơ theo từng phòng - Từ ngày 1/1/2026 - 16/3/2026</p>
 
         <!-- ĐỔI "data.xlsx" THÀNH TÊN FILE EXCEL THỰC TẾ CỦA BẠN -->
         <a href="Báo cáo thanh toán 16032026_1.xlsx" download class="btn-download">
@@ -526,8 +526,8 @@
             <div class="card">
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
                     <div>
-                        <div class="card-title">Tổng quan tình hình thanh toán</div>
-                        <div class="card-sub">Năm 2026 · Toàn trung tâm</div>
+                        <div class="card-title">Tổng quan thanh toán</div>
+                        <!-- <div class="card-sub">Năm 2026 · Toàn trung tâm</div> -->
                         <div class="overview-body">
                             <div class="donut-wrap">
                                 <canvas id="donutMain" width="160" height="160"></canvas>
@@ -556,7 +556,7 @@
 
                     <div style="border-left:1px solid var(--border);padding-left:16px;">
                         <div class="card-title">Tổng hồ sơ theo trạng thái</div>
-                        <div class="card-sub">Toàn trung tâm · Năm 2026</div>
+                        <!-- <div class="card-sub">Toàn trung tâm · Năm 2026</div> -->
                         <div style="display:flex;align-items:center;gap:14px;margin-top:12px;">
                             <div style="position:relative;width:130px;height:130px;flex-shrink:0;">
                                 <canvas id="donutStatus" width="130" height="130"></canvas>
@@ -582,8 +582,8 @@
             <div class="card">
                 <div class="chart-header">
                     <div>
-                        <div class="card-title">Theo dõi số tiền đã thanh toán</div>
-                        <div class="card-sub">Chi phí thực hiện và Đã thanh toán — 2026</div>
+                        <div class="card-title">Số tiền đã thanh toán</div>
+                        <!-- <div class="card-sub">Chi phí thực hiện và Đã thanh toán — 2026</div> -->
                     </div>
                     <div class="btn-group">
                         <button class="btn active" id="btnValue" onclick="switchMode('value')">Giá trị</button>
@@ -600,8 +600,8 @@
 
         <!-- RIGHT COLUMN -->
         <div class="card">
-            <div class="card-title">Theo dõi số lượng hồ sơ theo trạng thái</div>
-            <div class="card-sub">Phân loại hồ sơ theo từng phòng ban</div>
+            <div class="card-title">Số lượng hồ sơ theo trạng thái</div>
+            <!-- <div class="card-sub">Phân loại hồ sơ theo từng phòng ban</div> -->
             <div class="legend-row" id="legendRow"></div>
             <div class="donuts-row1" id="donutsRow1"></div>
             <div class="donuts-row2" id="donutsRow2"></div>
@@ -613,25 +613,25 @@
 
     <script>
         const deptData = [
-            { dept: "Tổng hợp", chiPhi: 6144, daTT: 4710, color: "#5b8fe8", light: "#dde9fc", bg: "#eff6ff", border: "#7aacef", text: "#4872c4" },
-            { dept: "Khoa học công nghệ", chiPhi: 45, daTT: 45, color: "#4baa6e", light: "#c8eeda", bg: "#f0fdf4", border: "#6ec897", text: "#3a8a5a" },
-            { dept: "Sản xuất công nghiệp", chiPhi: 1294, daTT: 138, color: "#e0a040", light: "#faeac8", bg: "#fffbeb", border: "#e8b86a", text: "#b87c2a" },
-            { dept: "Bảo dưỡng thiết bị", chiPhi: 8412, daTT: 282, color: "#e06060", light: "#fadadb", bg: "#fff5f5", border: "#e89090", text: "#c04848" },
-            { dept: "Đổi mới sáng tạo", chiPhi: 856, daTT: 0, color: "#9b74d8", light: "#e8dcf8", bg: "#f8f4ff", border: "#c0a0e8", text: "#7050b0" },
+            { dept: "P.Tổng hợp", chiPhi: 6144, daTT: 4710, color: "#5b8fe8", light: "#dde9fc", bg: "#eff6ff", border: "#7aacef", text: "#4872c4" },
+            { dept: "P.Khoa học công nghệ", chiPhi: 45, daTT: 45, color: "#4baa6e", light: "#c8eeda", bg: "#f0fdf4", border: "#6ec897", text: "#3a8a5a" },
+            { dept: "P.Sản xuất công nghiệp", chiPhi: 1294, daTT: 138, color: "#e0a040", light: "#faeac8", bg: "#fffbeb", border: "#e8b86a", text: "#b87c2a" },
+            { dept: "P.Bảo dưỡng thiết bị", chiPhi: 8412, daTT: 282, color: "#e06060", light: "#fadadb", bg: "#fff5f5", border: "#e89090", text: "#c04848" },
+            { dept: "P.Đổi mới sáng tạo", chiPhi: 856, daTT: 0, color: "#9b74d8", light: "#e8dcf8", bg: "#f8f4ff", border: "#c0a0e8", text: "#7050b0" },
         ];
 
         const statusData = [
-            { dept: "Tổng hợp", daTT: 20, chuaNop: 28, boSung: 2, ktCheck: 0, dangTrinh: 0 },
-            { dept: "Khoa học công nghệ", daTT: 0, chuaNop: 0, boSung: 0, ktCheck: 0, dangTrinh: 0 },
-            { dept: "Sản xuất công nghiệp", daTT: 6, chuaNop: 3, boSung: 1, ktCheck: 0, dangTrinh: 2 },
-            { dept: "Bảo dưỡng thiết bị", daTT: 24, chuaNop: 34, boSung: 5, ktCheck: 0, dangTrinh: 17 },
-            { dept: "Đổi mới sáng tạo", daTT: 2, chuaNop: 3, boSung: 0, ktCheck: 6, dangTrinh: 2 },
+            { dept: "P.Tổng hợp", daTT: 20, chuaNop: 28, boSung: 2, ktCheck: 0, dangTrinh: 0 },
+            { dept: "P.Khoa học công nghệ", daTT: 0, chuaNop: 0, boSung: 0, ktCheck: 0, dangTrinh: 0 },
+            { dept: "P.Sản xuất công nghiệp", daTT: 6, chuaNop: 3, boSung: 1, ktCheck: 0, dangTrinh: 2 },
+            { dept: "P.Bảo dưỡng thiết bị", daTT: 24, chuaNop: 34, boSung: 5, ktCheck: 0, dangTrinh: 17 },
+            { dept: "P.Đổi mới sáng tạo", daTT: 2, chuaNop: 3, boSung: 0, ktCheck: 6, dangTrinh: 2 },
         ];
 
         const statusSlices = [
             { key: "daTT", name: "Đã Thanh Toán", color: "#4baa6e" },
             { key: "chuaNop", name: "Chưa nộp", color: "#e06060" },
-            { key: "boSung", name: "Bổ sung", color: "#e8854a" },
+            { key: "boSung", name: "Bổ sung", color: "#ffd700" },
             { key: "ktCheck", name: "Kế toán check", color: "#9b74d8" },
             { key: "dangTrinh", name: "Đang trình", color: "#5b8fe8" },
         ];
@@ -830,7 +830,7 @@
                     <td class="stat-pct">${pct}%</td>
                 </tr>`;
             }).join('');
-            if (tableRows) {
+            if (!tableRows) { //Hiển thị thông tin dưới số lượng hồ sơ theo trạng thái, thay đổi bởi nút !
                 container.querySelector('.donut-dept-card').innerHTML += `<table class="dept-stat-table">${tableRows}</table>`;
             }
 
@@ -858,7 +858,7 @@
                             datalabels: {
                                 display(ctx) {
                                     if (!total) return false;
-                                    return (ctx.dataset.data[ctx.dataIndex] / total) >= 0.05;
+                                    return (ctx.dataset.data[ctx.dataIndex] / total) >= 0.01;
                                 },
                                 formatter(value) {
                                     return value + '\n' + Math.round((value / total) * 100) + '%';
