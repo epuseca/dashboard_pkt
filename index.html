@@ -290,19 +290,20 @@
         }
 
         .mini-card .m-dept {
-            font-size: 10px;
+            font-size: 14px;
             font-weight: 700;
         }
 
         .mini-card .m-pct {
-            font-size: 16px;
+            font-size: 13px;
             font-weight: 800;
             margin-top: 2px;
         }
 
         .mini-card .m-sub {
-            font-size: 14px;
+            font-size: 15px;
             color: #353941;
+            font-weight: 800;
         }
 
         /* ─── STATUS PANEL ─── */
@@ -500,9 +501,9 @@
 
     <!-- HEADER -->
     <div class="header">
-        <div class="header-badge">Dashboard · Kế toán · Trung tâm Công nghệ Cao Mobifone · Năm 2026</div>
+        <div class="header-badge">Dashboard · Trung tâm Công nghệ Cao Mobifone</div>
         <h1>BÁO CÁO THANH TOÁN NĂM 2026</h1>
-        <p>Tổng hợp số liệu thanh toán và trạng thái hồ sơ theo từng phòng - Từ ngày 1/1/2026 - 16/3/2026</p>
+        <p>Tổng hợp số liệu thanh toán và trạng thái hồ sơ theo phòng (1/1/2026 - 16/3/2026) </p>
 
         <!-- ĐỔI "data.xlsx" THÀNH TÊN FILE EXCEL THỰC TẾ CỦA BẠN -->
         <a href="Báo cáo thanh toán 16032026_1.xlsx" download class="btn-download">
@@ -787,7 +788,7 @@
                 <div class="mini-card" style="background:${d.bg};border-left-color:${d.border};">
                     <div class="m-dept" style="color:${d.text}">${d.dept}</div>
                     <div class="m-pct"  style="color:${d.text}">${tiLe}%</div>
-                    <div class="m-sub">${fmt(d.daTT)}/${fmt(d.chiPhi)}</div>
+                    <div class="m-sub" >${fmt(d.daTT)}/${fmt(d.chiPhi)} </div>
                 </div>`;
         });
 
