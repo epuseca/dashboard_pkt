@@ -503,10 +503,10 @@
     <div class="header">
         <div class="header-badge">Dashboard · Trung tâm Công nghệ Cao Mobifone</div>
         <h1>BÁO CÁO THANH TOÁN NĂM 2026</h1>
-        <p>Tổng hợp số liệu thanh toán và trạng thái hồ sơ theo phòng (1/1/2026 - 30/3/2026) </p>
+        <p>Tổng hợp số liệu thanh toán và trạng thái hồ sơ theo phòng (1/1/2026 - 16/3/2026) </p>
 
         <!-- ĐỔI "data.xlsx" THÀNH TÊN FILE EXCEL THỰC TẾ CỦA BẠN -->
-        <a href="Báo cáo thanh toán 30032026 (Autosaved).xlsx" download class="btn-download">
+        <a href="Báo cáo thanh toán 16032026_1.xlsx" download class="btn-download">
             <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
@@ -614,19 +614,19 @@
 
     <script>
         const deptData = [
-            { dept: "P.Tổng hợp", chiPhi: 9734, daTT: 8942, color: "#5b8fe8", light: "#dde9fc", bg: "#eff6ff", border: "#7aacef", text: "#4872c4" },
-            { dept: "P.Khoa học công nghệ", chiPhi: 90, daTT: 90, color: "#4baa6e", light: "#c8eeda", bg: "#f0fdf4", border: "#6ec897", text: "#3a8a5a" },
-            { dept: "P.Sản xuất công nghiệp", chiPhi: 841, daTT: 214, color: "#e0a040", light: "#faeac8", bg: "#fffbeb", border: "#e8b86a", text: "#b87c2a" },
-            { dept: "P.Bảo dưỡng thiết bị", chiPhi: 8523, daTT: 1611, color: "#e06060", light: "#fadadb", bg: "#fff5f5", border: "#e89090", text: "#c04848" },
-            { dept: "P.Đổi mới sáng tạo", chiPhi: 870, daTT: 50, color: "#9b74d8", light: "#e8dcf8", bg: "#f8f4ff", border: "#c0a0e8", text: "#7050b0" },
+            { dept: "P.Tổng hợp", chiPhi: 6144, daTT: 4710, color: "#5b8fe8", light: "#dde9fc", bg: "#eff6ff", border: "#7aacef", text: "#4872c4" },
+            { dept: "P.Khoa học công nghệ", chiPhi: 45, daTT: 45, color: "#4baa6e", light: "#c8eeda", bg: "#f0fdf4", border: "#6ec897", text: "#3a8a5a" },
+            { dept: "P.Sản xuất công nghiệp", chiPhi: 1294, daTT: 138, color: "#e0a040", light: "#faeac8", bg: "#fffbeb", border: "#e8b86a", text: "#b87c2a" },
+            { dept: "P.Bảo dưỡng thiết bị", chiPhi: 8412, daTT: 282, color: "#e06060", light: "#fadadb", bg: "#fff5f5", border: "#e89090", text: "#c04848" },
+            { dept: "P.Đổi mới sáng tạo", chiPhi: 856, daTT: 0, color: "#9b74d8", light: "#e8dcf8", bg: "#f8f4ff", border: "#c0a0e8", text: "#7050b0" },
         ];
 
         const statusData = [
-            { dept: "P.Tổng hợp", daTT: 51, chuaNop: 3, boSung: 6, ktCheck: 0, dangTrinh: 1 },
+            { dept: "P.Tổng hợp", daTT: 20, chuaNop: 28, boSung: 2, ktCheck: 0, dangTrinh: 0 },
             { dept: "P.Khoa học công nghệ", daTT: 0, chuaNop: 0, boSung: 0, ktCheck: 0, dangTrinh: 0 },
-            { dept: "P.Sản xuất công nghiệp", daTT: 8, chuaNop: 3, boSung: 1, ktCheck: 0, dangTrinh: 0 },
-            { dept: "P.Bảo dưỡng thiết bị", daTT: 48, chuaNop: 24, boSung: 5, ktCheck: 1, dangTrinh: 6 },
-            { dept: "P.Đổi mới sáng tạo", daTT: 13, chuaNop: 1, boSung: 0, ktCheck: 0, dangTrinh: 1 },
+            { dept: "P.Sản xuất công nghiệp", daTT: 6, chuaNop: 3, boSung: 1, ktCheck: 0, dangTrinh: 2 },
+            { dept: "P.Bảo dưỡng thiết bị", daTT: 24, chuaNop: 34, boSung: 5, ktCheck: 0, dangTrinh: 17 },
+            { dept: "P.Đổi mới sáng tạo", daTT: 2, chuaNop: 3, boSung: 0, ktCheck: 6, dangTrinh: 2 },
         ];
 
         const statusSlices = [
