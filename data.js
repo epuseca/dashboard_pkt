@@ -45,7 +45,7 @@ const REPORT_DATA = {
       ],
     },
 
-    /* ══════════════ KỲ 2 (MỚI NHẤT) ══════════════ */
+    /* ══════════════ KỲ 2 ══════════════ */
     {
       title: "BÁO CÁO THANH TOÁN NĂM 2026",
       period: "1/1/2026 - 30/3/2026",
@@ -69,6 +69,29 @@ const REPORT_DATA = {
       ],
     },
 
+    /* ══════════════ KỲ 3 (MỚI NHẤT) ══════════════ */
+    {
+      title: "BÁO CÁO THANH TOÁN NĂM 2026",
+      period: "01/01/2026 - 04/05/2026",
+      label: "04/05/2026",
+      excelFile: "data excel/Báo cáo thanh toán 04052026.xlsx",
+
+      deptData: [
+        { dept: "P.Tổng hợp", chiPhi: 17226, daTT: 15630, color: "#5b8fe8", light: "#dde9fc", bg: "#eff6ff", border: "#7aacef", text: "#4872c4" },
+        { dept: "P.Khoa học công nghệ", chiPhi: 6, daTT: 6, color: "#4baa6e", light: "#c8eeda", bg: "#f0fdf4", border: "#6ec897", text: "#3a8a5a" },
+        { dept: "P.Sản xuất công nghiệp", chiPhi: 1102, daTT: 927, color: "#e0a040", light: "#faeac8", bg: "#fffbeb", border: "#e8b86a", text: "#b87c2a" },
+        { dept: "P.Bảo dưỡng thiết bị", chiPhi: 11930, daTT: 6813, color: "#e06060", light: "#fadadb", bg: "#fff5f5", border: "#e89090", text: "#c04848" },
+        { dept: "P.Đổi mới sáng tạo", chiPhi: 2840, daTT: 1052, color: "#9b74d8", light: "#e8dcf8", bg: "#f8f4ff", border: "#c0a0e8", text: "#7050b0" },
+      ],
+
+      statusData: [
+        { dept: "P.Tổng hợp", daTT: 80, chuaNop: 13, boSung: 4, ktCheck: 2, dangTrinh: 6 },
+        { dept: "P.Khoa học công nghệ", daTT: 0, chuaNop: 0, boSung: 0, ktCheck: 0, dangTrinh: 0 },
+        { dept: "P.Sản xuất công nghiệp", daTT: 19, chuaNop: 2, boSung: 1, ktCheck: 0, dangTrinh: 0 },
+        { dept: "P.Bảo dưỡng thiết bị", daTT: 83, chuaNop: 30, boSung: 3, ktCheck: 0, dangTrinh: 1 },
+        { dept: "P.Đổi mới sáng tạo", daTT: 37, chuaNop: 4, boSung: 0, ktCheck: 0, dangTrinh: 5 },
+      ],
+    },
     /* ══════════════ THÊM KỲ MỚI Ở ĐÂY ══════════════
      * Copy khối trên, dán xuống dưới, cập nhật số liệu.
      * index.html sẽ tự dùng phần tử CUỐI CÙNG làm mặc định.
