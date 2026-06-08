@@ -69,7 +69,7 @@ const REPORT_DATA = {
       ],
     },
 
-    /* ══════════════ KỲ 3 (MỚI NHẤT) ══════════════ */
+    /* ══════════════ KỲ 3  ══════════════ */
     {
       title: "BÁO CÁO THANH TOÁN NĂM 2026",
       period: "01/01/2026 - 04/05/2026",
@@ -90,6 +90,30 @@ const REPORT_DATA = {
         { dept: "P.Sản xuất công nghiệp", daTT: 19, chuaNop: 2, boSung: 1, ktCheck: 0, dangTrinh: 0 },
         { dept: "P.Bảo dưỡng thiết bị", daTT: 83, chuaNop: 30, boSung: 3, ktCheck: 0, dangTrinh: 1 },
         { dept: "P.Đổi mới sáng tạo", daTT: 37, chuaNop: 4, boSung: 0, ktCheck: 0, dangTrinh: 5 },
+      ],
+    },
+
+    /* ══════════════ KỲ 4 (MỚI NHẤT) ══════════════ */
+    {
+      title: "BÁO CÁO THANH TOÁN NĂM 2026",
+      period: "01/01/2026 - 04/06/2026",
+      label: "04/06/2026",
+      excelFile: "data excel/Báo cáo thanh toán 04062026.xlsx",
+
+      deptData: [
+        { dept: "P.Tổng hợp", chiPhi: 24544, daTT: 22152, color: "#5b8fe8", light: "#dde9fc", bg: "#eff6ff", border: "#7aacef", text: "#4872c4" },
+        { dept: "P.Khoa học công nghệ", chiPhi: 53, daTT: 53, color: "#4baa6e", light: "#c8eeda", bg: "#f0fdf4", border: "#6ec897", text: "#3a8a5a" },
+        { dept: "P.Sản xuất công nghiệp", chiPhi: 1419, daTT: 1255, color: "#e0a040", light: "#faeac8", bg: "#fffbeb", border: "#e8b86a", text: "#b87c2a" },
+        { dept: "P.Bảo dưỡng thiết bị", chiPhi: 16135, daTT: 7791, color: "#e06060", light: "#fadadb", bg: "#fff5f5", border: "#e89090", text: "#c04848" },
+        { dept: "P.Đổi mới sáng tạo", chiPhi: 3962, daTT: 1457, color: "#9b74d8", light: "#e8dcf8", bg: "#f8f4ff", border: "#c0a0e8", text: "#7050b0" },
+      ],
+
+      statusData: [
+        { dept: "P.Tổng hợp", daTT: 129, chuaNop: 7, boSung: 11, ktCheck: 0, dangTrinh: 9 },
+        { dept: "P.Khoa học công nghệ", daTT: 1, chuaNop: 0, boSung: 0, ktCheck: 0, dangTrinh: 0 },
+        { dept: "P.Sản xuất công nghiệp", daTT: 28, chuaNop: 3, boSung: 3, ktCheck: 0, dangTrinh: 0 },
+        { dept: "P.Bảo dưỡng thiết bị", daTT: 117, chuaNop: 7, boSung: 10, ktCheck: 14, dangTrinh: 8 },
+        { dept: "P.Đổi mới sáng tạo", daTT: 67, chuaNop: 2, boSung: 4, ktCheck: 0, dangTrinh: 0 },
       ],
     },
     /* ══════════════ THÊM KỲ MỚI Ở ĐÂY ══════════════
